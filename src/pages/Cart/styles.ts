@@ -151,6 +151,7 @@ export const FooterContent = styled.div`
   justify-content: space-between;
 `
 export const FreeDeliveryContainer = styled.div`
+  margin-top: 1rem;
   padding: 0.5rem;
   text-align: center;
 

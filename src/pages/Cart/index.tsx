@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { Trash, ShoppingCart } from 'phosphor-react'
 
@@ -18,6 +18,9 @@ import {
 
 import api from '../../config/api'
 
+import { Navigate } from 'react-router-dom'
+import { Context } from '../../context/Context'
+
 interface ProductsType {
   id: number
   imageUrl: string
@@ -28,9 +31,12 @@ interface ProductsType {
 
 export function Cart() {
   const [products, setProducts] = useState<ProductsType[]>([])
+  const [isSuccess, setIsSuccess] = useState(false)
 
   const delivery = 5
   const freeDeliveryValue = 40
+
+  const { dispatch } = useContext(Context)
 
   async function getProductCart() {
     try {
@@ -58,7 +64,17 @@ export function Cart() {
   }
 
   function handleSubmitCart() {
+    dispatch({
+      type: 'CHECKOUT_SUCCESS',
+      payload: {
+        user: {
+          isCheckoutSuccess: true,
+        },
+      },
+    })
+
     setProducts([])
+    setIsSuccess(true)
   }
 
   function handleReloadCart() {
@@ -141,6 +157,8 @@ export function Cart() {
       </FooterContainer>
 
       <ButtonRealodCart onClick={handleReloadCart}>Reload</ButtonRealodCart>
+
+      {isSuccess ? <Navigate to="/success"></Navigate> : null}
     </CartContainer>
   )
 }
