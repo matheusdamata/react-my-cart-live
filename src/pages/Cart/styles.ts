@@ -51,46 +51,6 @@ export const ProductContainer = styled.div`
   }
 `
 
-export const ProductContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-
-  margin-left: 1rem;
-
-  strong {
-    font-size: 1.125rem;
-  }
-
-  span {
-    font-size: 1rem;
-    color: ${(props) => props.theme['gray-500']};
-  }
-`
-
-export const ProductButtonRemove = styled.button`
-  width: 32px;
-  height: 32px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 0;
-  border-radius: 6px;
-  background: ${(props) => props.theme['red-remove']};
-  cursor: pointer;
-
-  &:hover {
-    transition: background-color 0.2s;
-    background: ${(props) => props.theme['red-hover']};
-  }
-
-  svg {
-    color: ${(props) => props.theme.white};
-  }
-`
-
 export const CartEmptyContainer = styled.div`
   height: 240px;
 

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 
-import { Trash, ShoppingCart } from 'phosphor-react'
+import { ShoppingCart } from 'phosphor-react'
 
 import {
   ButtonRealodCart,
@@ -10,18 +10,16 @@ import {
   FooterContainer,
   FooterContent,
   FreeDeliveryContainer,
-  ProductButtonRemove,
   ProductCartList,
-  ProductContainer,
-  ProductContent,
 } from './styles'
 
 import api from '../../config/api'
 
 import { Navigate } from 'react-router-dom'
 import { Context } from '../../context/Context'
+import { Products } from './components/Products'
 
-interface ProductsType {
+export type ProductsType = {
   id: number
   imageUrl: string
   name: string
@@ -102,23 +100,11 @@ export function Cart() {
       {products.length > 0 ? (
         <ProductCartList>
           {products.map((product) => (
-            <ProductContainer key={product.id}>
-              <img src={product.imageUrl} alt="" />
-              <ProductContent>
-                <strong>{product.name}</strong>
-                <span>
-                  R${' '}
-                  {product.value.toLocaleString('pt-br', {
-                    minimumFractionDigits: 2,
-                  })}
-                </span>
-              </ProductContent>
-              <ProductButtonRemove
-                onClick={() => handleRemoveItemCart(product.name)}
-              >
-                <Trash size={20} weight="bold" />
-              </ProductButtonRemove>
-            </ProductContainer>
+            <Products
+              key={product.id}
+              product={product}
+              onClick={() => handleRemoveItemCart(product.name)}
+            />
           ))}
         </ProductCartList>
       ) : (
