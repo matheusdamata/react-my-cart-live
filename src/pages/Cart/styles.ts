@@ -91,6 +91,25 @@ export const ProductButtonRemove = styled.button`
   }
 `
 
+export const CartEmptyContainer = styled.div`
+  height: 240px;
+
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  justify-content: center;
+
+  h1 {
+    font-weight: 400;
+    color: ${(props) => props.theme.purple};
+  }
+
+  svg {
+    color: ${(props) => props.theme.purple};
+  }
+`
+
 export const FooterContainer = styled.footer`
   display: flex;
   flex-direction: column;
@@ -119,10 +138,41 @@ export const FooterContainer = styled.footer`
       transition: background-color 0.2s;
       background: ${(props) => props.theme['purple-dark']};
     }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
   }
 `
 
 export const FooterContent = styled.div`
   display: flex;
   justify-content: space-between;
+`
+export const FreeDeliveryContainer = styled.div`
+  padding: 0.5rem;
+  text-align: center;
+
+  border-radius: 25px;
+  background: ${(props) => props.theme['base-delivery']};
+
+  font-weight: 400;
+  color: ${(props) => props.theme['base-delivery-text']};
+`
+
+export const ButtonRealodCart = styled.button`
+  background: transparent;
+  border: 0;
+
+  font-size: 0.75rem;
+  color: ${(props) => props.theme['gray-500']};
+
+  margin-bottom: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    transition: color 0.2s;
+    color: ${(props) => props.theme.purple};
+  }
 `

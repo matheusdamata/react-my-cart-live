@@ -4,6 +4,9 @@ export const defaultTheme = {
   'base-card': '#F3F2F2',
   'base-title': '#272221',
 
+  'base-delivery': '#c7ffa6',
+  'base-delivery-text': '#217a01',
+
   'gray-300': '#C4C4CC',
   'gray-500': '#7C7C8A',
   'gray-800': '#202024',
