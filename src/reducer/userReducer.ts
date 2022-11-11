@@ -1,6 +1,6 @@
 import produce from 'immer'
 
-export type ProductsType = {
+export type CartProps = {
   id: number
   imageUrl: string
   name: string
@@ -14,7 +14,7 @@ export type UserProps = {
 }
 
 export type UserType = {
-  carts: ProductsType[]
+  carts: CartProps[]
   user: UserProps
 }
 
@@ -26,12 +26,23 @@ export const userReducer = (state: UserType, action: any) => {
       })
     case 'ADD_CART':
       return produce(state, (draft) => {
-        draft.carts.push(action.payload)
+        draft.carts.push(...action.payload)
       })
-    case 'INCREMENT_PRODUCT':
-      break
-    case 'DECREMENT_PRODUCT':
-      break
+    case 'INCREMENT_PRODUCT': {
+      const currentProductIndex = state.carts.findIndex((cart) => {
+        return cart.id === action.payload.id
+      })
+
+      console.log(currentProductIndex)
+
+      return state
+      // return produce(state, (draft) => {
+      //   draft.carts[currentProductIndex].amount += action.payload.increment
+      // })
+    }
+    // case 'DECREMENT_PRODUCT': {
+    //   break
+    // }
     default:
       return state
   }

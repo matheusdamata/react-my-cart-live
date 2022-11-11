@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 
 import { ShoppingCart } from 'phosphor-react'
 
@@ -35,17 +35,16 @@ export function Cart() {
   const delivery = 5
   const freeDeliveryValue = 40
 
-  const { state, dispatch } = useContext(Context)
+  const { carts, dispatch } = useContext(Context)
 
-  console.log(state.user)
+  console.log(carts)
 
-  async function getProductCart() {
+  const getProductCart = useCallback(async () => {
     try {
       const json = await api.getProduct()
       console.log(json)
       if (json.length > 0) {
         setProducts(() => json)
-
         dispatch({
           type: 'ADD_CART',
           payload: json,
@@ -55,12 +54,11 @@ export function Cart() {
       console.log('Tente novamente mais tarde!', e)
       setProducts([])
     }
-  }
+  }, [dispatch])
 
-  useEffect(() => {
-    getProductCart()
-    console.log(products)
-  }, [])
+  // useEffect(() => {
+  //   getProductCart()
+  // }, [getProductCart])
 
   function handleRemoveItemCart(name: string) {
     const updateCartProducts = products.filter(
@@ -152,6 +150,8 @@ export function Cart() {
       </FooterContainer>
 
       <ButtonRealodCart onClick={handleReloadCart}>Reload</ButtonRealodCart>
+
+      <button onClick={getProductCart}>TESTAR</button>
 
       {isSuccess ? <Navigate to="/success"></Navigate> : null}
     </CartContainer>

@@ -1,10 +1,9 @@
 import React, { createContext, ReactNode, useReducer } from 'react'
-import { ProductsType } from '../pages/Cart'
 
-import { UserProps, userReducer } from '../reducer/userReducer'
+import { CartProps, UserProps, userReducer } from '../reducer/userReducer'
 
 type ContextType = {
-  carts: ProductsType[]
+  carts: CartProps[]
   user: UserProps
   dispatch: React.Dispatch<any>
 }

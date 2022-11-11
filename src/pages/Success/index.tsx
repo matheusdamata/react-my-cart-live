@@ -4,10 +4,9 @@ import { Context } from '../../context/Context'
 import { Navigate } from 'react-router-dom'
 
 export function Success() {
-  const { state } = useContext(Context)
+  const { user } = useContext(Context)
 
-  const isCheckout = state.user.isCheckoutSuccess
-  console.log(isCheckout)
+  const isCheckout = user.isCheckoutSuccess
 
   return (
     <>

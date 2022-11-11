@@ -20,10 +20,16 @@ export function Products({ product, onClick }: ProductsProps) {
 
   const { dispatch } = useContext(Context)
 
-  function handleAmountProduct(type: 'remove' | 'add') {
+  function handleAmountProduct(type: 'remove' | 'add', id: number) {
     switch (type) {
       case 'add':
-        dispatch()
+        dispatch({
+          type: 'INCREMENT_PRODUCT',
+          payload: {
+            id,
+            increment: 1,
+          },
+        })
         break
       case 'remove':
         break
@@ -42,13 +48,13 @@ export function Products({ product, onClick }: ProductsProps) {
         <ButtonsContent>
           <ButtonsDownAndUpContent>
             <button
-              onClick={() => handleAmountProduct('remove')}
+              onClick={() => handleAmountProduct('remove', product.id)}
               disabled={amountProduct <= 1}
             >
               <Minus size={20} weight="bold" />
             </button>
             {product.amount}
-            <button onClick={() => handleAmountProduct('add')}>
+            <button onClick={() => handleAmountProduct('add', product.id)}>
               <Plus size={20} weight="bold" />
             </button>
           </ButtonsDownAndUpContent>
