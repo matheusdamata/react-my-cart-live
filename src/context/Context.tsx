@@ -1,37 +1,33 @@
-import React, { createContext, useReducer } from 'react'
+import React, { createContext, ReactNode, useReducer } from 'react'
+import { ProductsType } from '../pages/Cart'
 
-import { userInitialState, userReducer, UserType } from '../reducer/userReducer'
-
-type initialStateType = {
-  user: UserType
-}
+import { UserProps, userReducer } from '../reducer/userReducer'
 
 type ContextType = {
-  state: initialStateType
+  carts: ProductsType[]
+  user: UserProps
   dispatch: React.Dispatch<any>
 }
 
 interface ContextProviderType {
-  children: React.ReactNode
+  children: ReactNode
 }
 
-const initialState = {
-  user: userInitialState,
-}
-
-export const Context = createContext<ContextType>({
-  state: initialState,
-  dispatch: () => null,
-})
-
-const mainReducer = (state: initialStateType, action: any) => ({
-  user: userReducer(state.user, action),
-})
+export const Context = createContext({} as ContextType)
 
 export const ContextProvider = ({ children }: ContextProviderType) => {
-  const [state, dispatch] = useReducer(mainReducer, initialState)
+  const [userState, dispatch] = useReducer(userReducer, {
+    carts: [],
+    user: {
+      isCheckoutSuccess: false,
+    },
+  })
+
+  const { carts, user } = userState
 
   return (
-    <Context.Provider value={{ state, dispatch }}>{children}</Context.Provider>
+    <Context.Provider value={{ carts, user, dispatch }}>
+      {children}
+    </Context.Provider>
   )
 }

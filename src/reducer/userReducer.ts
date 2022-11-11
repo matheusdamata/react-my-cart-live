@@ -1,19 +1,38 @@
 import produce from 'immer'
 
-export type UserType = {
+export type ProductsType = {
+  id: number
+  imageUrl: string
+  name: string
+  description: string
+  value: number
+  amount: number
+}
+
+export type UserProps = {
   isCheckoutSuccess: boolean
 }
 
-export const userInitialState: UserType = {
-  isCheckoutSuccess: false,
+export type UserType = {
+  carts: ProductsType[]
+  user: UserProps
 }
 
 export const userReducer = (state: UserType, action: any) => {
-  console.log(action)
-  if (action.type === 'CHECKOUT_SUCCESS') {
-    return produce(state, (draft) => {
-      draft.isCheckoutSuccess = action.payload.user.isCheckoutSuccess
-    })
+  switch (action.type) {
+    case 'CHECKOUT_SUCCESS':
+      return produce(state, (draft) => {
+        draft.user.isCheckoutSuccess = action.payload.user.isCheckoutSuccess
+      })
+    case 'ADD_CART':
+      return produce(state, (draft) => {
+        draft.carts.push(action.payload)
+      })
+    case 'INCREMENT_PRODUCT':
+      break
+    case 'DECREMENT_PRODUCT':
+      break
+    default:
+      return state
   }
-  return state
 }

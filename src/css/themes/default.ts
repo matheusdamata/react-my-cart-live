@@ -2,6 +2,8 @@ export const defaultTheme = {
   white: '#fff',
 
   'base-card': '#F3F2F2',
+  'base-button': '#E6E5E5',
+  'base-hover': '#D7D5D5',
   'base-title': '#272221',
 
   'base-delivery': '#c7ffa6',

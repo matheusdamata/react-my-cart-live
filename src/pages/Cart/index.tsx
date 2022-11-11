@@ -17,7 +17,7 @@ import api from '../../config/api'
 
 import { Navigate } from 'react-router-dom'
 import { Context } from '../../context/Context'
-import { Products } from './components/Products'
+import { Products } from './components/Product'
 
 export type ProductsType = {
   id: number
@@ -25,6 +25,7 @@ export type ProductsType = {
   name: string
   description: string
   value: number
+  amount: number
 }
 
 export function Cart() {
@@ -34,13 +35,21 @@ export function Cart() {
   const delivery = 5
   const freeDeliveryValue = 40
 
-  const { dispatch } = useContext(Context)
+  const { state, dispatch } = useContext(Context)
+
+  console.log(state.user)
 
   async function getProductCart() {
     try {
       const json = await api.getProduct()
+      console.log(json)
       if (json.length > 0) {
         setProducts(() => json)
+
+        dispatch({
+          type: 'ADD_CART',
+          payload: json,
+        })
       }
     } catch (e) {
       console.log('Tente novamente mais tarde!', e)
