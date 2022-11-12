@@ -6,15 +6,20 @@ import { BrowserRouter } from 'react-router-dom'
 import { Router } from './Router'
 import { ContextProvider } from './context/Context'
 
+import { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+
 export function App() {
   return (
     <ContextProvider>
-      <ThemeProvider theme={defaultTheme}>
-        <GlobalStyle />
-        <BrowserRouter>
-          <Router />
-        </BrowserRouter>
-      </ThemeProvider>
+      <SkeletonTheme>
+        <ThemeProvider theme={defaultTheme}>
+          <GlobalStyle />
+          <BrowserRouter>
+            <Router />
+          </BrowserRouter>
+        </ThemeProvider>
+      </SkeletonTheme>
     </ContextProvider>
   )
 }
