@@ -9,6 +9,7 @@ import {
   DividingLine,
   FooterContainer,
   FooterContent,
+  FooterContentSpan,
   FreeDeliveryContainer,
   ProductCartList,
 } from './styles'
@@ -88,7 +89,8 @@ export function Cart() {
     return sumTotal + product.subTotal
   }, 0)
 
-  const total = subTotal >= 40 ? subTotal : subTotal + delivery
+  const total = subTotal >= freeDeliveryValue ? subTotal : subTotal + delivery
+  const isFreeDelivery = total > freeDeliveryValue
 
   return (
     <CartContainer>
@@ -117,7 +119,11 @@ export function Cart() {
       <FooterContainer>
         <FooterContent>
           <strong>Entrega</strong>
-          <span>R$ 5,00</span>
+          {isFreeDelivery ? (
+            <FooterContentSpan variant="free">Frete Grátis</FooterContentSpan>
+          ) : (
+            <FooterContentSpan>R$ 5,00</FooterContentSpan>
+          )}
         </FooterContent>
         <FooterContent>
           <strong>Total</strong>

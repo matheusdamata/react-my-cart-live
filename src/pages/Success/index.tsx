@@ -48,10 +48,8 @@ export function Success() {
                 <CurrencyDollar size={18} weight="fill" />
               </IconItem>
               <div>
-                <p>
-                  Entrega em <strong>Rua da Programação, 100</strong>
-                </p>
-                <p>Bairro VSCode - Goiânia, GO</p>
+                <p>Pagamento na entrega</p>
+                <strong>Cartão de Crédito</strong>
               </div>
             </IconsContent>
           </IconsContainer>

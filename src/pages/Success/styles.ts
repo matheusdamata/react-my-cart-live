@@ -17,6 +17,7 @@ export const Container = styled.div`
   }
 
   h1 {
+    font-family: 'Baloo 2';
     font-size: 1.5rem;
     color: ${(props) => props.theme['yellow-dark']};
   }

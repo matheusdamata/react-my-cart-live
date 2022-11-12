@@ -110,6 +110,18 @@ export const FooterContent = styled.div`
   display: flex;
   justify-content: space-between;
 `
+
+interface FooterContentSpanProps {
+  variant?: 'free'
+}
+
+export const FooterContentSpan = styled.span<FooterContentSpanProps>`
+  color: ${(props) =>
+    props.variant === 'free'
+      ? props.theme['base-delivery-text']
+      : props.theme['base-title']};
+`
+
 export const FreeDeliveryContainer = styled.div`
   margin-top: 1rem;
   padding: 0.5rem;
