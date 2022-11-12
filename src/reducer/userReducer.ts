@@ -33,16 +33,26 @@ export const userReducer = (state: UserType, action: any) => {
         return cart.id === action.payload.id
       })
 
-      console.log(currentProductIndex)
-
-      return state
-      // return produce(state, (draft) => {
-      //   draft.carts[currentProductIndex].amount += action.payload.increment
-      // })
+      return produce(state, (draft) => {
+        draft.carts[currentProductIndex].amount += action.payload.increment
+        console.log(draft.carts[currentProductIndex].amount)
+      })
     }
-    // case 'DECREMENT_PRODUCT': {
-    //   break
-    // }
+    case 'DECREMENT_PRODUCT': {
+      const currentProductIndex = state.carts.findIndex((cart) => {
+        return cart.id === action.payload.id
+      })
+
+      return produce(state, (draft) => {
+        draft.carts[currentProductIndex].amount += action.payload.increment
+      })
+    }
+    case 'REMOVE_FROM_CART': {
+      return {
+        ...state,
+        carts: state.carts.filter((product) => product.id !== action.payload),
+      }
+    }
     default:
       return state
   }

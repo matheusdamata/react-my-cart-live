@@ -16,9 +16,11 @@ type ProductsProps = {
 }
 
 export function Products({ product, onClick }: ProductsProps) {
-  const amountProduct = 1
-
   const { dispatch } = useContext(Context)
+
+  const formatPrice = (value: number, amount: number) => value * amount
+
+  const total = formatPrice(product.amount, product.value)
 
   function handleAmountProduct(type: 'remove' | 'add', id: number) {
     switch (type) {
@@ -32,6 +34,13 @@ export function Products({ product, onClick }: ProductsProps) {
         })
         break
       case 'remove':
+        dispatch({
+          type: 'DECREMENT_PRODUCT',
+          payload: {
+            id,
+            increment: -1,
+          },
+        })
         break
     }
   }
@@ -49,7 +58,7 @@ export function Products({ product, onClick }: ProductsProps) {
           <ButtonsDownAndUpContent>
             <button
               onClick={() => handleAmountProduct('remove', product.id)}
-              disabled={amountProduct <= 1}
+              disabled={product.amount <= 1}
             >
               <Minus size={20} weight="bold" />
             </button>
@@ -66,7 +75,7 @@ export function Products({ product, onClick }: ProductsProps) {
       </ProductContent>
       <span>
         R${' '}
-        {product.value.toLocaleString('pt-br', {
+        {total.toLocaleString('pt-br', {
           minimumFractionDigits: 2,
         })}
       </span>

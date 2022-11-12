@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 
 import { ShoppingCart } from 'phosphor-react'
 
@@ -29,7 +29,6 @@ export type ProductsType = {
 }
 
 export function Cart() {
-  const [products, setProducts] = useState<ProductsType[]>([])
   const [isSuccess, setIsSuccess] = useState(false)
 
   const delivery = 5
@@ -44,7 +43,6 @@ export function Cart() {
       const json = await api.getProduct()
       console.log(json)
       if (json.length > 0) {
-        setProducts(() => json)
         dispatch({
           type: 'ADD_CART',
           payload: json,
@@ -52,20 +50,14 @@ export function Cart() {
       }
     } catch (e) {
       console.log('Tente novamente mais tarde!', e)
-      setProducts([])
     }
   }, [dispatch])
 
-  // useEffect(() => {
-  //   getProductCart()
-  // }, [getProductCart])
-
-  function handleRemoveItemCart(name: string) {
-    const updateCartProducts = products.filter(
-      (product) => product.name !== name,
-    )
-
-    setProducts(() => updateCartProducts)
+  function handleRemoveItemCart(id: number) {
+    dispatch({
+      type: 'REMOVE_FROM_CART',
+      payload: id,
+    })
   }
 
   function handleSubmitCart() {
@@ -78,7 +70,6 @@ export function Cart() {
       },
     })
 
-    setProducts([])
     setIsSuccess(true)
   }
 
@@ -86,31 +77,31 @@ export function Cart() {
     getProductCart()
   }
 
-  // const formatPrice = (value: number, amount: number) => value * amount
+  const formatPrice = (value: number, amount: number) => value * amount
 
-  const cartFormatted = products.map((product) => ({
+  const cartFormatted = carts.map((product) => ({
     ...product,
-    subTotal: product.value,
+    subTotal: formatPrice(product.amount, product.value),
   }))
 
   const subTotal = cartFormatted.reduce((sumTotal, product) => {
     return sumTotal + product.subTotal
   }, 0)
 
-  const total = subTotal + delivery
+  const total = subTotal >= 40 ? subTotal : subTotal + delivery
 
   return (
     <CartContainer>
-      <h1>Meu carrinho ({products.length})</h1>
+      <h1>Meu carrinho ({carts.length})</h1>
       <DividingLine />
 
-      {products.length > 0 ? (
+      {carts.length > 0 ? (
         <ProductCartList>
-          {products.map((product) => (
+          {carts.map((product) => (
             <Products
               key={product.id}
               product={product}
-              onClick={() => handleRemoveItemCart(product.name)}
+              onClick={() => handleRemoveItemCart(product.id)}
             />
           ))}
         </ProductCartList>
@@ -130,12 +121,16 @@ export function Cart() {
         </FooterContent>
         <FooterContent>
           <strong>Total</strong>
-          <span>
-            R${' '}
-            {total.toLocaleString('pt-br', {
-              minimumFractionDigits: 2,
-            })}
-          </span>
+          {carts.length > 0 ? (
+            <span>
+              R${' '}
+              {total.toLocaleString('pt-br', {
+                minimumFractionDigits: 2,
+              })}
+            </span>
+          ) : (
+            <span>R$ 0,00</span>
+          )}
         </FooterContent>
 
         {total > freeDeliveryValue ? (
@@ -144,14 +139,14 @@ export function Cart() {
           </FreeDeliveryContainer>
         ) : null}
 
-        <button onClick={handleSubmitCart} disabled={products.length === 0}>
+        <button onClick={handleSubmitCart} disabled={carts.length === 0}>
           Finalizar pedido
         </button>
       </FooterContainer>
 
-      <ButtonRealodCart onClick={handleReloadCart}>Reload</ButtonRealodCart>
-
-      <button onClick={getProductCart}>TESTAR</button>
+      <ButtonRealodCart onClick={handleReloadCart}>
+        Carregar Carrinho
+      </ButtonRealodCart>
 
       {isSuccess ? <Navigate to="/success"></Navigate> : null}
     </CartContainer>
