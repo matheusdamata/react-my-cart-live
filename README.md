@@ -17,7 +17,7 @@ O armazenamento dos produtos do carrinho está sendo feito através do JSON-SERV
 
 Poderiamos estar utilizando um meio mais eficiente para armazenamento, como localStorage, mas não foi essa opção escolhida pelos espectadores durante a live.
 
-### Instação
+### Instalação
 - `npm i`
 
 * Necessário possuir o JSON-SERVER, consulte https://www.npmjs.com/package/json-server para mais informações.
